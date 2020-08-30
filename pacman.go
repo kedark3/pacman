@@ -12,12 +12,13 @@ const (
 	Port = "8080"
 )
 
-func serveFiles(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, r.URL.Path[1:])
-}
-
 func main() {
-	http.HandleFunc("/", serveFiles)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/index.html")
+	})
+
+	fs := http.FileServer(http.Dir("static/"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	err := http.ListenAndServe(Host+":"+Port, nil)
 	if err != nil {
 		log.Fatal("Error Starting the HTTP Server: ", err)
