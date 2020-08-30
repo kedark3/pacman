@@ -13,11 +13,11 @@ const (
 )
 
 func main() {
+	fs := http.FileServer(http.Dir("static/"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "index.html")
+		http.Redirect(w, r, "/static/index.html", http.StatusSeeOther)
 	})
 
-	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	err := http.ListenAndServe(Host+":"+Port, nil)
 	if err != nil {
