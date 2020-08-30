@@ -14,7 +14,7 @@ const (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "static/index.html")
+		http.ServeFile(w, r, "index.html")
 	})
 
 	fs := http.FileServer(http.Dir("static/"))
