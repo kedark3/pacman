@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,7 +14,8 @@ const (
 
 func main() {
 	port := "43880"
-	if len(os.Args) != 0 {
+	if len(os.Args) > 1 {
+		fmt.Println(len(os.Args))
 		port = string(os.Args[1])
 	}
 	fs := http.FileServer(http.Dir("static/"))
