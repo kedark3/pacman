@@ -20,12 +20,13 @@ func main() {
 	}
 	fs := http.FileServer(http.Dir("static/"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Print("Received request on '/' ")
 		http.Redirect(w, r, "/static/index.html", http.StatusSeeOther)
 	})
 
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	log.Print("Started HTTP server on " + Host + ":" + port)
 	err := http.ListenAndServe(Host+":"+port, nil)
-	log.Print("Started HTTP server on" + Host + port)
 	if err != nil {
 		log.Fatal("Error Starting the HTTP Server: ", err)
 		return
