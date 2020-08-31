@@ -25,6 +25,7 @@ func main() {
 
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	err := http.ListenAndServe(Host+":"+port, nil)
+	log.Print("Started HTTP server on" + Host + port)
 	if err != nil {
 		log.Fatal("Error Starting the HTTP Server: ", err)
 		return
