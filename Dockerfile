@@ -9,6 +9,6 @@ LABEL author="Kedar Kulkarni"
 WORKDIR /pacman
 COPY --from=builder /go/bin/pacman-exec /pacman/pacman
 VOLUME /pacman/static
-EXPOSE 8080
+EXPOSE 80880
 
 CMD ["./pacman"]
