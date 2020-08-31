@@ -1,0 +1,64 @@
+# not a template, but simple list of resources that are required to be created for this to run on OpenShift/K8s
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pacman-vol-claim
+  labels:
+    app: pacman
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pacman-service
+  labels:
+    app: pacman
+spec:
+  selector:
+    app: pacman
+  ports:
+    - name: pacman-http
+      protocol: TCP
+      port: 43880
+      targetPort: 43880
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pacman
+  labels:
+    app: pacman
+spec:
+  containers:
+  - image: quay.io/kkulkarn/pacman
+    imagePullPolicy: Always      
+    name: pacman-container
+    volumeMounts:
+      - mountPath: /pacman/static
+        name: static-content
+    ports:
+    - containerPort: 43880
+      protocol: TCP
+      name: http
+  initContainers:
+  - name: clone-git-repo
+    image: golang
+    command:
+      - git
+      - clone
+      - https://github.com/kedark3/pacman
+      - /pacman/static
+    volumeMounts:
+      - mountPath: /pacman/static
+        name: static-content
+  volumes:
+  - name: static-content
+    persistentVolumeClaim:
+      claimName: pacman-vol-claim
