@@ -3,13 +3,12 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 )
 
 const (
 	// Host name of the HTTP Server
 	Host = "localhost"
-	// Port for HTTP server
-	Port = "8080"
 )
 
 func main() {
@@ -19,7 +18,7 @@ func main() {
 	})
 
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	err := http.ListenAndServe(Host+":"+Port, nil)
+	err := http.ListenAndServe(Host+":"+string(os.Args[1]), nil)
 	if err != nil {
 		log.Fatal("Error Starting the HTTP Server: ", err)
 		return
