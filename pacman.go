@@ -13,13 +13,7 @@ func main() {
 		fmt.Println(len(os.Args))
 		port = string(os.Args[1])
 	}
-	fs := http.FileServer(http.Dir("static/"))
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		log.Print("Received request on '/' ")
-		http.Redirect(w, r, "/static/index.html", http.StatusSeeOther)
-	})
-
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.Handle("/", http.FileServer(assets))
 	log.Print("Started HTTP server on " + ":" + port)
 	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
