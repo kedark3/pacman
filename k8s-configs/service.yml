@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: pacman
+  name: pacman
+spec:
+  ports:
+  - name: 30880-43880
+    port: 30880
+    protocol: TCP
+    targetPort: 43880
+  selector:
+    app: pacman
+  type: ClusterIP
+status:
+  loadBalancer: {}

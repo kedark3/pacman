@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: pacman
+  name: pacman
+spec:
+  host: ""
+  port:
+    targetPort: 30880-43880
+  to:
+    kind: ""
+    name: pacman
+    weight: null
+status:
+  ingress: null
