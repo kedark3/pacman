@@ -1,0 +1,25 @@
+# Deployment object for k8s/openshift deployments
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: pacman
+  name: pacman
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pacman
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pacman
+    spec:
+      containers:
+      - image: quay.io/kkulkarn/pacman
+        name: pacman
+        resources: {}
+        ports:
+          - containerPort: 43880
