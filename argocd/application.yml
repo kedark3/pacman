@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pacman
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/kedark3/pacman.git'
+    path: k8s-configs
+    targetRevision: master
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: pacman
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+  
