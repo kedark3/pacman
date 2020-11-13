@@ -13,3 +13,16 @@ podman(or docker) run -p 8080:8080 -v `pwd`:/pacman/static:Z --rm quay.io/kkulka
 - In 2nd and final iteration I learned how to generate static data with `vfsgen` that can be bundled into pacman's binary and serve it, see `data-generator` directory for the same.
 - Another thing to notice here is the `Dockerfile` it uses a small container image `scratch` with multi-stage image reduction, and that helps make the final container image merely few MiBs vs 1+ GiB otherwise. 
 - `k8s-configs` dir contains deployment, route and service object definitions you can use to deploy this in your cluster. The image is available on Quay.io.
+
+
+# ArgoCD
+
+Using ArgoCd CLI to create application as:
+```sh
+argocd app create -f application.yml
+
+# OR 
+
+kubectl create -f argocd/application.yml
+
+```
